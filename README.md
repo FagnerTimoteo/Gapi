@@ -51,6 +51,11 @@ Exemplo:
 GET http://localhost:3000/api/games
 ```
 
+### 🪟 WorkFlow:
+
+- Github Flow
+- Este workflow foi escolhido devido a simplicidade do projeto, compatível com a do workflow
+
 ---
 
 Feito com 💻 por Fagner Timoteo da Silva
