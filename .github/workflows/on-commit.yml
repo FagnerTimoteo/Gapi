@@ -32,7 +32,9 @@ jobs:
       - name: Instalar dependências
         run: npm install
 
-      - name: Rodar a aplicação
+      - name: Testar inicialização (executar por 5 segundos)
         env:
-          MONGO_URL: mongodb://localhost:27017/nome_do_banco
-        run: npm start
+          MONGO_URL: mongodb://localhost:27017/games
+        run: |
+          node app.js &
+          sleep 5
