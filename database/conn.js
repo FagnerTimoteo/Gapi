@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
 
-async function main(){
+async function main() {
     try {
-        //Retringe que dados não especificados no modelo não sejam enviado para o banco
-        mongoose.set("strictQuery",true);
-        //String de conexão
-        await mongoose.connect('mongodb://127.0.0.1:27017/games');
-        //Apresenta a mensagem de conexão com a base banco
+        mongoose.set("strictQuery", true);
+
+        // Usa MONGO_URL do ambiente ou default para localhost
+        const mongoUrl = process.env.MONGO_URL || 'mongodb://127.0.0.1:27017/games';
+
+        await mongoose.connect(mongoUrl);
         console.log("conectado ao mongodb");
     } catch (error) {
-        //Capctura e exibe alguma exceção que ocorrer
         console.log(`Error: ${error}`);
     }
 }
