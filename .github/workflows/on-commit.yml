@@ -1,7 +1,7 @@
-name: Run on Commit
+name: Pull Request Workflow
 
 on:
-  push:
+  pull_request:
     branches:
       - '**'
 
@@ -15,14 +15,17 @@ jobs:
         ports:
           - 27017:27017
         options: >-
-          --health-cmd "mongosh --eval 'db.runCommand({ ping: 1 })'" 
-          --health-interval 10s 
-          --health-timeout 5s 
+          --health-cmd "mongosh --eval 'db.runCommand({ ping: 1 })'"
+          --health-interval 10s
+          --health-timeout 5s
           --health-retries 5
 
     steps:
       - name: Clonar repositório
         uses: actions/checkout@v3
+
+      - name: Trocar para a branch "main"
+        run: git checkout main
 
       - name: Instalar Node.js
         uses: actions/setup-node@v3
@@ -32,7 +35,7 @@ jobs:
       - name: Instalar dependências
         run: npm install
 
-      - name: Testar inicialização (executar por 5 segundos)
+      - name: Executar a aplicação por 5 segundos
         env:
           MONGO_URL: mongodb://localhost:27017/games
         run: |
