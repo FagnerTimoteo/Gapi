@@ -1,55 +1,65 @@
-# API de Games 🎮
+# 🎮 API de Games
 
-API simples para retornar uma lista de games, usando Node.js, Express e MongoDB.
+API simples construída com **Node.js**, **Express** e **MongoDB** para gerenciamento de jogos. Ela permite cadastrar, listar e gerenciar games, utilizando uma arquitetura baseada em máquinas virtuais com Vagrant.
+
+---
 
 ## 🚀 Como executar
 
 1. Clone o repositório:
 ```bash
 git clone https://github.com/seu-usuario/games-api.git
+```
+
+2. Instale os programas:
+Virtual box: `https://www.virtualbox.org/wiki/Downloads`
+Vagrant `https://developer.hashicorp.com/vagrant/install`
+
+3. Suba o vagrant:
+```bash
 cd [nome do repositório]
+vagrant up
 ```
+---
+## 💻 Como fazer testes
 
-2. Instale as dependências:
+1. Acessar uma vm
 ```bash
-npm install
+# Acessar a vm1
+vagrant ssh vm1
+
+# Acessar a vm2
+vagrant ssh vm2
 ```
 
-3. Inicie o servidor:
+2. Teste de post e get na vm1
+- **GET**
 ```bash
-npm start
+curl http://192.168.56.11:3001/api/games
 ```
 
-O servidor irá rodar em: `http://localhost:3000`
-
-## 🛠 Configuração do Banco de Dados (MongoDB)
-
-A API utiliza o MongoDB como banco de dados. Por padrão, espera-se que o serviço esteja rodando localmente.
-
-- **Endereço padrão:** `mongodb://127.0.0.1:27017`
-- **Nome do banco:** `games`
-
-Se necessário, edite o arquivo `conn.js` para alterar a URL do MongoDB:
-
-```js
-// conn.js
-const mongoose = require("mongoose");
-mongoose.connect("mongodb://127.0.0.1:27017/games");
+- **POST**
+```bash
+curl -X POST http://192.168.56.11:3001/api/games \
+  -H "Content-Type: application/json" \
+  -d '{
+    "titulo": "The Legend of Zelda: Breath of the Wild",
+    "genero": "Aventura",
+    "dataLancamento": "2017-03-03",
+    "plataforma": "Nintendo Switch",
+    "desenvolvedora": "Nintendo",
+    "email": "nintendo@zelda.com"
+  }'
 ```
+---
 
-### 🪟 O que é necessário:
 
-- Node.js
-- MongoDb
-
-## 📡 Rota disponível
-
-- **GET** `/api/games` — retorna a lista de games.
-
-Exemplo:
-```http
-GET http://localhost:3000/api/games
-```
+### 📦  Tecnologias Utilizadas:
+1. Node.js
+2. Express
+3. MongoDB + Mongoose
+4. Vagrant + VirtualBox
+5. Nodemon
 
 ### 🪟 WorkFlow:
 
@@ -58,4 +68,4 @@ GET http://localhost:3000/api/games
 
 ---
 
-Feito com 💻 por Fagner Timoteo da Silva
+🧑‍💻 por Fagner Timoteo da Silva
