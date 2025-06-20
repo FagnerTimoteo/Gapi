@@ -14,7 +14,7 @@ const routes = require("./routes/router");
 app.use("/api", routes);
 
 // Porta
-const port = 3000;
+const port = 3001;
 app.listen(port, function(){
-    console.log("Servidor ligado.");
+    console.log("Servidor rodando na porta " + port);
 })
