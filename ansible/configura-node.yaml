@@ -1,0 +1,51 @@
+---
+- name: Configurar servidor Node.js com MongoDB nos servidores
+  hosts: servidores
+  become: true
+
+  tasks:
+    - name: Atualiza pacotes
+      apt:
+        update_cache: yes
+
+    - name: Instala dependências
+      apt:
+        name:
+          - curl
+        state: present
+
+    - name: Instala Node.js 18
+      shell: |
+        curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+        apt-get install -y nodejs build-essential
+        
+    - name: Instala MongoDB
+      shell: |
+        wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | apt-key add -
+        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" > /etc/apt/sources.list.d/mongodb-org-4.4.list
+        apt-get update
+        apt-get install -y mongodb-org
+        systemctl enable mongod
+        systemctl start mongod
+
+    - name: Clona o repositório da aplicação
+      git:
+        repo: https://github.com/usuario/seu-repositorio.git
+        dest: /home/vagrant/app
+
+    - name: Instala dependências do Node
+      npm:
+        path: /home/vagrant/app
+        production: yes
+
+    - name: Instala nodemon globalmente
+      npm:
+        name: nodemon
+        global: yes
+
+    - name: Inicia a aplicação com nohup
+      shell: |
+        cd /home/vagrant/app
+        nohup npm start > app.log 2>&1 &
+      args:
+        chdir: /home/vagrant/app
