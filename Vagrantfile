@@ -38,9 +38,6 @@ Vagrant.configure("2") do |config|
       cp /vagrant_keys/private_key /home/vagrant/.ssh/vm2_key
       chown vagrant:vagrant /home/vagrant/.ssh/vm2_key
       chmod 600 /home/vagrant/.ssh/vm2_key
-
-      # Entra no repositório do inventário
-      cd /vagrant/ansible
     SHELL
   end  
 end

@@ -1,5 +1,5 @@
 ---
-- name: Configurar servidor Node.js com MongoDB nos servidores
+- name: Configurar servidor Node.js com MongoDB nas vms
   hosts: servidores
   become: true
 
@@ -28,24 +28,24 @@
         systemctl enable mongod
         systemctl start mongod
 
-    - name: Clona o repositório da aplicação
-      git:
-        repo: https://github.com/usuario/seu-repositorio.git
-        dest: /home/vagrant/app
-
     - name: Instala dependências do Node
-      npm:
-        path: /home/vagrant/app
-        production: yes
+      shell: |
+        cd /home/vagrant/vagrant_data
+        npm install --no-bin-links
 
     - name: Instala nodemon globalmente
       npm:
         name: nodemon
         global: yes
 
-    - name: Inicia a aplicação com nohup
+    - name: Instala PM2 globalmente
+      npm:
+        name: pm2
+        global: yes
+
+    - name: Inicia aplicação com PM2
       shell: |
-        cd /home/vagrant/app
-        nohup npm start > app.log 2>&1 &
+        pm2 start app.js --name gapi
+        pm2 save
       args:
-        chdir: /home/vagrant/app
+        chdir: /home/vagrant/vagrant_data
