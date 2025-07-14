@@ -36,7 +36,7 @@
       git:
         repo: https://github.com/FagnerTimoteo/Gapi.git
         dest: /home/vagrant/app
-        version: feature/ansible
+        version: main
 
     - name: Instala dependências do Node
       npm:
